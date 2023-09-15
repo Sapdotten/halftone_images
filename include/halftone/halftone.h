@@ -1,5 +1,5 @@
-#ifndef HALFTONE_HALFTONE_H_
-#define HALFTONE_HALFTONE_H_
+#ifndef INCLUDE_HALFTONE_HALFTONE_H_
+#define INCLUDE_HALFTONE_HALFTONE_H_
 namespace halftone {
  template<typename T>
 class Image {
