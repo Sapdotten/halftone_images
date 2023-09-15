@@ -11,14 +11,14 @@ if(MSVC)
     endif()
 endif()
 
-add_library(matrix STATIC "include/matrix.h" "src/matrix.cc")
-add_library(halftone STATIC "include/halftone.h" "src/halftone.cc")
-target_include_directories(matrix PUBLIC "include")
-target_include_directories(halftone PUBLIC "include")
+add_library(matrix STATIC "include/matrix/matrix.h" "include/matrix/matrix.cc")
+add_library(halftone STATIC "include/halftone/halftone.h" "include/halftone/halftone.cc")
+target_include_directories(matrix PUBLIC "include/matrix")
+target_include_directories(halftone PUBLIC "include/halftone")
 
 
 # Add source to this project's executable.
-add_executable (${PROJECT_NAME} "main.cpp" "include/matrix.h")
-target_link_libraries(halftone matrix)
+add_executable (${PROJECT_NAME} "main.cpp")
+target_link_libraries(halftone PRIVATE matrix)
 target_link_libraries(${PROJECT_NAME} halftone)
 # TODO: Add tests and install targets if needed.
