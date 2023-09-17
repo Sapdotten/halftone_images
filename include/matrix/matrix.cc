@@ -30,7 +30,7 @@ T& Vector<T>::operator[](int num) {
 }
 
 template <typename T>
-void Vector<T>::swap(Vector<T>& other) {
+void Vector<T>::Swap(Vector<T>& other) {
   std::swap(this->ptr_, other.ptr_);
   std::swap(this->size_, other.size_);
 }
@@ -82,7 +82,21 @@ Matrix<T>::Matrix(const Matrix<T>& other) {
   this->columns_ = other.columns_;
   this->ptr_ = new Vector[other.rows_];
   for (int i = 0; i < other.rows_; i++) {
+    this->prt_ = other[i];
   }
+}
+
+template <typename T>
+void Matrix<T>::Swap(Matrix<T>& other) {
+  std::swap(this->ptr_, other.ptr_);
+  std::swap(this->rows_, other.rows_);
+  std::swap(this->cols_, other.columns_);
+}
+
+template <typename T>
+Matrix<T>& Matrix<T>::operator=(const Matrix<T> other) {
+  this->Swap(other);
+  return *this;
 }
 
 }  // namespace halftone

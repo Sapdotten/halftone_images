@@ -11,8 +11,8 @@ class Vector {
   Vector();
   Vector(int size) : size_(size);
   Vector(const Vector<T>& other);
-  Vector& operator=(const Vector other);
-  void swap(Vector<T>& other);
+  Vector<T>& operator=(const Vector<T> other);
+  void Swap(Vector<T>& other);
 
   ~Vector();
   T& operator[](int num);
@@ -28,8 +28,10 @@ class Matrix {
   Matrix();
   Matrix(int rows, int columns) : rows_(rows), columns_(columns);
   Matrix(const Matrix<T> &other);
+  Matrix<T>& operator=(const Matrix<T> other);
   ~Matrix();
   Vector<T>& operator[](int num);
+  void Swap(Matrix<T> &other);
 };
 }  // namespace halftone
 #endif
