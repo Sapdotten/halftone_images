@@ -6,6 +6,8 @@ class Image {
   int width_;
   int heigth_;
   Matrix<T> content_;
+
+ public:
   Image();
   Image(int width, int height, bool random_filling)
       : width_(width), height_(height);
