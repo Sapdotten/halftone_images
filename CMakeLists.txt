@@ -1,6 +1,7 @@
-﻿cmake_minimum_required (VERSION 3.8)
+﻿cmake_minimum_required (VERSION 3.11)
+
+project (Halftone CXX)
 set(CMAKE_CXX_STANDARD 23)
-project (HalftoneImages)
 
 if(MSVC)
     if(CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
@@ -10,7 +11,17 @@ if(MSVC)
     endif()
 endif()
 
-# Add source to this project's executable.
+
+add_library(matrix STATIC "include/matrix/matrix.cpp")
+add_library(halftone STATIC "include/halftone/halftone.cpp")
+target_include_directories(matrix PUBLIC "include/matrix")
+target_include_directories(halftone PUBLIC "include/halftone")
+
+
+
 add_executable (${PROJECT_NAME} "main.cpp")
+target_link_libraries(halftone PUBLIC matrix)
+target_link_libraries(${PROJECT_NAME} halftone)
+
 
 # TODO: Add tests and install targets if needed.
