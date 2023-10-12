@@ -11,11 +11,13 @@ using namespace std;
 using namespace halftone;
 
 void test() { 
-  Image<bool> a(10, 10, true); 
+  Image<char> a(10, 10, false); 
+  a(0, 0) = -126;
   cout << a << endl; // or whatever
-  std::chrono::duration<int, std::milli> timespan(1000);
-  std::this_thread::sleep_for(timespan);
-  Image<bool> b(10, 10, true);
+  /*std::chrono::duration<int, std::milli> timespan(1000);
+  std::this_thread::sleep_for(timespan);*/
+  Image<char> b(10, 10, false);
+  b(0, 0) = 100;
   cout << b << endl << (a + b);
 
   

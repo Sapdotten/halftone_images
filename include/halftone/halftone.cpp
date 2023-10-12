@@ -139,15 +139,69 @@ Image<T> Image<T>::operator*(const Image<T>& other) const {
 }
 
 
-template <typename T>
-Image<T> Image<T>::operator+(const Image<T>& other) const {
+
+Image<bool> Image<bool>::operator+(const Image<bool>& other) const {
   if (this->height_ != other.height_ || this->width_ != other.width_) {
     throw std::invalid_argument("Images have different sizes");
   }
-  Image<T> result(this->height_, this->width_, false);
+  Image<bool> result(this->height_, this->width_, false);
   for (int i = 0; i < this->height_; i++) {
     for (int j = 0; j < this->width_; j++) {
-      result(i, j) = (T)((*this)(i, j) + other(i, j));
+      result(i, j) = (bool)((*this)(i, j) + other(i, j));
+    }
+  }
+  return result;
+}
+
+Image<short> Image<short>::operator+(const Image<short>& other) const {
+  if (this->height_ != other.height_ || this->width_ != other.width_) {
+    throw std::invalid_argument("Images have different sizes");
+  }
+  Image<short> result(this->height_, this->width_, false);
+  for (int i = 0; i < this->height_; i++) {
+    for (int j = 0; j < this->width_; j++) {
+      int res = (*this)(i, j) + other(i, j);
+      result(i, j) = (res>std::numeric_limits<short>::max()) 
+        ? (std::numeric_limits<short>::max())
+          : ((res < std::numeric_limits<short>::min())
+                                ? (std::numeric_limits<short>::min())
+                                : (res));
+    }
+  }
+  return result;
+}
+
+Image<float> Image<float>::operator+(const Image<float>& other) const {
+  if (this->height_ != other.height_ || this->width_ != other.width_) {
+    throw std::invalid_argument("Images have different sizes");
+  }
+  Image<float> result(this->height_, this->width_, false);
+  for (int i = 0; i < this->height_; i++) {
+    for (int j = 0; j < this->width_; j++) {
+      double res = (*this)(i, j) + other(i, j);
+      result(i, j) = (res > std::numeric_limits<float>::max())
+                         ? (std::numeric_limits<float>::max())
+                         : ((res < std::numeric_limits<float>::min())
+                                ? (std::numeric_limits<float>::min())
+                                : (res));
+    }
+  }
+  return result;
+}
+
+Image<char> Image<char>::operator+(const Image<char>& other) const {
+  if (this->height_ != other.height_ || this->width_ != other.width_) {
+    throw std::invalid_argument("Images have different sizes");
+  }
+  Image<char> result(this->height_, this->width_, false);
+  for (int i = 0; i < this->height_; i++) {
+    for (int j = 0; j < this->width_; j++) {
+      short res = (*this)(i, j) + other(i, j);
+      result(i, j) = (res > std::numeric_limits<char>::max())
+                         ? (std::numeric_limits<char>::max())
+                         : ((res < std::numeric_limits<char>::min())
+                                ? (std::numeric_limits<char>::min())
+                                : (res));
     }
   }
   return result;
@@ -168,7 +222,7 @@ Image<T> Image<T>::operator+(const T num) const {
   Image<T> result(this->height_, this->width_, false);
   for (int i = 0; i < this->height_; i++) {
     for (int j = 0; j < this->width_; j++) {
-      result(i, j) = (T)((*this)(i, j) + num);
+      result(i, j) = ((*this)(i, j) + num);
     }
   }
   return result;
