@@ -32,6 +32,8 @@ class Image {
   bool operator!=(const Image<T>& other) const;
   double FillFactor() const;
   void Swap(Image<T> &other);
+  template <typename P>
+  T isIn(const P value) const;
 
  private:
   void RandomFilling();
@@ -161,11 +163,7 @@ Image<short> Image<short>::operator+(const Image<short>& other) const {
   for (int i = 0; i < this->height_; i++) {
     for (int j = 0; j < this->width_; j++) {
       int res = (*this)(i, j) + other(i, j);
-      result(i, j) = (res>std::numeric_limits<short>::max()) 
-        ? (std::numeric_limits<short>::max())
-          : ((res < std::numeric_limits<short>::min())
-                                ? (std::numeric_limits<short>::min())
-                                : (res));
+      result(i, j) = this->isIn(res);
     }
   }
   return result;
@@ -179,11 +177,7 @@ Image<float> Image<float>::operator+(const Image<float>& other) const {
   for (int i = 0; i < this->height_; i++) {
     for (int j = 0; j < this->width_; j++) {
       double res = (*this)(i, j) + other(i, j);
-      result(i, j) = (res > std::numeric_limits<float>::max())
-                         ? (std::numeric_limits<float>::max())
-                         : ((res < std::numeric_limits<float>::min())
-                                ? (std::numeric_limits<float>::min())
-                                : (res));
+      result(i, j) = this->isIn(res);
     }
   }
   return result;
@@ -197,11 +191,7 @@ Image<char> Image<char>::operator+(const Image<char>& other) const {
   for (int i = 0; i < this->height_; i++) {
     for (int j = 0; j < this->width_; j++) {
       short res = (*this)(i, j) + other(i, j);
-      result(i, j) = (res > std::numeric_limits<char>::max())
-                         ? (std::numeric_limits<char>::max())
-                         : ((res < std::numeric_limits<char>::min())
-                                ? (std::numeric_limits<char>::min())
-                                : (res));
+      result(i, j) = this->isIn(res);
     }
   }
   return result;
@@ -329,7 +319,15 @@ bool Image<T>::operator!=(const Image<T>& other) const {
   return (this->content_ != other.content_);
 }
 
-
+template <typename T> 
+template<typename P>
+T Image<T>::isIn(const P value) const {
+  return (value > std::numeric_limits<T>::max())
+      ? (std::numeric_limits<T>::max())
+      : ((value < std::numeric_limits<T>::min())
+             ? (std::numeric_limits<T>::min())
+             : (value));
+}
 
 }//namespace halftone
 #endif
