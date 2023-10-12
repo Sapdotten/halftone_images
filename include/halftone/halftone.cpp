@@ -240,9 +240,9 @@ Image<bool> Image<bool>::operator*(const bool num) const {
   return result;
 }
 
-template <typename T>
-Image<T> Image<T>::operator+(const T num) const {
-  Image<T> result(this->height_, this->width_, false);
+
+Image<bool> Image<bool>::operator+(const bool num) const {
+  Image<bool> result(this->height_, this->width_, false);
   for (int i = 0; i < this->height_; i++) {
     for (int j = 0; j < this->width_; j++) {
       result(i, j) = ((*this)(i, j) + num);
@@ -250,6 +250,43 @@ Image<T> Image<T>::operator+(const T num) const {
   }
   return result;
 }
+
+
+Image<short> Image<short>::operator+(const short num) const {
+  Image<short> result(this->height_, this->width_, false);
+  for (int i = 0; i < this->height_; i++) {
+    for (int j = 0; j < this->width_; j++) {
+      int res = (*this)(i, j) + num;
+      result(i, j) = this->isIn(res);
+    }
+  }
+  return result;
+}
+
+
+Image<float> Image<float>::operator+(const float num) const {
+  Image<float> result(this->height_, this->width_, false);
+  for (int i = 0; i < this->height_; i++) {
+    for (int j = 0; j < this->width_; j++) {
+      double res = (*this)(i, j) + num;
+      result(i, j) = this->isIn(res);
+    }
+  }
+  return result;
+}
+
+
+Image<char> Image<char>::operator+(const char num) const {
+  Image<char> result(this->height_, this->width_, false);
+  for (int i = 0; i < this->height_; i++) {
+    for (int j = 0; j < this->width_; j++) {
+      int res = (*this)(i, j) + num;
+      result(i, j) = this->isIn(res);
+    }
+  }
+  return result;
+}
+
 template <typename T>
 Image<T> Image<T>::operator!() const {
   Image<T> result(this->height_, this->width_, false);
